@@ -1,4 +1,4 @@
-package school.programmers.algorithm_ex;
+package algorithm_ex;
 
 import java.util.LinkedList;
 
