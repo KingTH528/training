@@ -1,29 +1,43 @@
 package school.programmers.l2;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class Miner {
 
-	public static void main(String[] args) {
-//		int[] picks = {1, 3, 2};
-//		String[] minerals = {"diamond", "diamond", "diamond", "iron", "iron", "diamond", "iron", "stone"};
-		int[] picks = {0, 1, 1};
-		String[] minerals = {"diamond", "diamond", "diamond", "diamond", "diamond", "iron", "iron", "iron", "iron", "iron", "diamond"};
-		
-		System.out.println("\n답 : " + solution(picks, minerals));
-
-	}
-
-	public static int solution(int[] picks, String[] minerals) {
+	public int solution(int[] picks, String[] minerals) {
 		int answer = 0;
 
+		
 		// 미네랄 -> 곡갱이별 피로도로 정리
+		int[][] mineralsInt;
+		
+		// 피로도 정리배열 row 결정
+		// 미네랄 갯수/5 기준으로 row 생성
 		int row = minerals.length/5+1;
-		if(minerals.length%5==0){
-			row -= 1;
+		if(minerals.length%5==0)row -= 1;
+		
+		// 보유한 곡갱이 갯수 기준으로 row 수 제한
+		if(row > picks[0]+picks[1]+picks[2]) {
+			row = picks[0]+picks[1]+picks[2];
 		}
+		
 		System.out.println("row : " + row);
-		int[][] mineralsInt = new int[row][3];
+		
+		
+		// 실제 사용할 곡갱이별 수량 제한(곡갱이 수가 미네랄 수보다 많이 처리할 수 있을 때 / 다이아 -> 철 -> 돌 순서)
+		if(row < picks[0]) picks[0] = row;
+		if(row < picks[0] + picks[1]) picks[1] = row - picks[0];
+		if(row < picks[0] + picks[1] + picks[2]) picks[2] = row - picks[0] - picks[1];
+		
+		System.out.println("사용할 곡갱이 수 정리(row = " + row + ")");
+		for(int i : picks) System.out.println(i);
+		
+		
+		
+		
+		// 필요한 만큼만 곡갱이별 피로도 배열 생성
+		mineralsInt = new int[row][3];
 		int mineralsD = 0;
 		int mineralsI = 0;
 		int mineralsS = 0;
@@ -35,20 +49,12 @@ public class Miner {
 			else if(minerals[i].equalsIgnoreCase("stone")) mineralsS++;
 			else {};
 			
-			//5의 배수면 줄바꿈 및 피로도 정리
-			if((i!=0 && i%5==4) || i == minerals.length-1) {
-				System.out.println();
-				System.out.println("==줄바꿈==(" + thisRow + ")->" + (thisRow+1));
-				System.out.println("다이아 수 : " + mineralsD);
-				System.out.println("철 수 : " + mineralsI);
-				System.out.println("돌 수 : " + mineralsS);
+			//5의 배수전 || 마지막데이터에서 줄바꿈 및 피로도 정리
+			if((i != 0 && i%5 == 4) || i == minerals.length-1) {
 				
 				//곡갱이별 피로도 정리
-				//다이아 곡갱이 썼을 때
 				mineralsInt[thisRow][0] = mineralsD + mineralsI + mineralsS;
-				//철 곡갱이 썼을 때
 				mineralsInt[thisRow][1] = 5*mineralsD + mineralsI + mineralsS;
-				//돌 곡갱이 썼을 때
 				mineralsInt[thisRow][2] = 25*mineralsD + 5*mineralsI + mineralsS;
 				
 				mineralsD = 0;
@@ -57,66 +63,33 @@ public class Miner {
 				
 				thisRow++; 
 			}
-		}
-
-		
-		System.out.println("\n피로도 정리");
-		for(int[] i : mineralsInt) {
-			for(int j : i) {
-				System.out.print(j + " ");
-			}
-			System.out.println();
+			if(thisRow == row) break;
+			
 		}
 		
 		
+		// 곡갱이 별 피로도 기준으로 배열 정렬 (최소값 구하고 제외하는 방식으로 해도 되는데 머리아플 듯...)
+		Arrays.sort(mineralsInt, new Comparator<int[]>() {
+		    @Override
+		    public int compare(int[] a, int[] b) {
+		        if (b[2] != a[2]) {
+		            return a[2] - b[2];  	 // mineralsInt[row][2]기준으로 정렬하는데
+		        } else {
+		        	if(b[1] != a[1]) {
+		        		return a[1] - b[1];  // 같으면 mineralsInt[row][1] 기준으로 정렬
+		        	}else {
+		        		return  a[0] - b[0]; // 그것도 같으면 mineralsInt[row][0] 기준으로 정렬
+		        	}
+		        }
+		    }
+		});
 		
-		int tempAnswer = 0;
-		int tempIndex = -1;
+		// 정렬된 순서대로 돌곡 -> 철곡 -> 다곡 넣고 계산
+		for(int i = 0 ; i < picks[2] ; i++) answer += mineralsInt[i][2];
+		for(int i = 0 ; i < picks[1] ; i++) answer += mineralsInt[i+picks[2]][1];
+		for(int i = 0 ; i < picks[0] ; i++) answer += mineralsInt[i+picks[2]+picks[1]][0];
 		
 		
-		for(int i = 0 ; i < picks[0] ; i++) {
-			for(int j = 0 ; j<row ; j++) {
-				int thisD = (mineralsInt[j][1] -  mineralsInt[j][0]);
-				if(tempAnswer < thisD) {
-					tempAnswer = thisD;
-					tempIndex = j;
-				}else {
-					
-				}
-			}
-			answer += mineralsInt[tempIndex][0];
-			mineralsInt[tempIndex][0] = 0;
-			mineralsInt[tempIndex][1] = 0;
-			mineralsInt[tempIndex][2] = 0;
-			tempAnswer = 0;
-		}
-		
-		for(int i = 0 ; i < picks[1] ; i++) {
-			for(int j = 0 ; j<row ; j++) {
-				int thisD = (mineralsInt[j][2] -  mineralsInt[j][1]);
-				if(tempAnswer < thisD) {
-					tempAnswer = thisD;
-					tempIndex = j;
-				}
-			}
-			answer += mineralsInt[tempIndex][1];
-			mineralsInt[tempIndex][0] = 0;
-			mineralsInt[tempIndex][1] = 0;
-			mineralsInt[tempIndex][2] = 0;
-			tempAnswer = 0;
-		}
-		
-		for(int i = 0 ; i < picks[2] ; i++) {
-			for(int j = 0 ; j<row ; j++) {
-				if(mineralsInt[j][2] != 0) tempIndex = j;
-			}
-			//여기
-			answer += mineralsInt[tempIndex][2];
-			mineralsInt[tempIndex][0] = 0;
-			mineralsInt[tempIndex][1] = 0;
-			mineralsInt[tempIndex][2] = 0;
-		}
-
-		return answer;
+        return answer;
 	}
 }
