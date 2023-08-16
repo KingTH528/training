@@ -3,6 +3,11 @@ package school.programmers.l2;
 import java.util.Arrays;
 import java.util.Comparator;
 
+
+
+//곡갱이별로 5번씩 사용하게 되니까 한단계라도 높은 광물이 하나라도 껴있으면 그거에 따라서 피로도 차이가 넘사벽으로 벌어짐
+//이라고 생각했지만 마지막에 하나만 (다이아나 철)들어오면 그것보다 한단계 낮은 광물 5개랑 같은 값을 가질 수 있음
+
 public class Miner {
 
 	public int solution(int[] picks, String[] minerals) {
@@ -22,7 +27,6 @@ public class Miner {
 			row = picks[0]+picks[1]+picks[2];
 		}
 		
-		System.out.println("row : " + row);
 		
 		
 		// 실제 사용할 곡갱이별 수량 제한(곡갱이 수가 미네랄 수보다 많이 처리할 수 있을 때 / 다이아 -> 철 -> 돌 순서)
@@ -30,8 +34,6 @@ public class Miner {
 		if(row < picks[0] + picks[1]) picks[1] = row - picks[0];
 		if(row < picks[0] + picks[1] + picks[2]) picks[2] = row - picks[0] - picks[1];
 		
-		System.out.println("사용할 곡갱이 수 정리(row = " + row + ")");
-		for(int i : picks) System.out.println(i);
 		
 		
 		
