@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.stream.IntStream;
 
 // 어떤 고수가 만든거
-public class MinerGPT {
+public class MinerOthers {
 
 	public int solution(int[] picks, String[] minerals) {
 		

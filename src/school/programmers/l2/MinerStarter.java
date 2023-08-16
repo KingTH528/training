@@ -23,7 +23,7 @@ public class MinerStarter {
 
 		
 		
-		System.out.println("답 : " + new MinerGPT().solution(picks, minerals));
+		System.out.println("답 : " + new MinerOthers().solution(picks, minerals));
 		
 	}
 
