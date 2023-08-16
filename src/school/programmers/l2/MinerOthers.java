@@ -44,14 +44,14 @@ public class MinerOthers {
 	public int solution(int[] picks, String[] minerals) {
 		
 		
-		
+		//-------- 범위 0 ~ 광물배열 길이 또는 0 ~ 곡갱이 갯수*5중 작은값으로 설정하고 i%5==0일 때마다 아래 코드 실행 --------//
 //		IntStream.range(0, Math.min(minerals.length, Arrays.stream(picks).sum() * 5))
 //		.filter(i -> i % 5 == 0)
         int endRange = Math.min(minerals.length, sum(picks) * 5);
         List<int[]> subArrays = new ArrayList<>();
         for (int i = 0; i < endRange; i += 5) {
         	
-        	
+        	//-------- 5칸씩(끝날때는 남은 미네랄 길이) 끊어서 5칸(또는 그 이하)짜리 배열생성 후 피로도 정보 입력 --------//
 //			.mapToObj(i -> Arrays.stream(Arrays.copyOfRange(minerals, i, Math.min(i + 5, minerals.length)))
             int[] subArray = new int[Math.min(5, minerals.length - i)];
             for (int j = 0; j < subArray.length; j++) {
@@ -65,7 +65,7 @@ public class MinerOthers {
         
         
         
-        
+      //-------- 리스트내 배열을 입력정보 합 기준으로 정렬하는데 만약 같으면 광물 수 기준으로 정렬 --------//
 //		.sorted((a, b) -> {
 //		int diff = Arrays.stream(b).sum() - Arrays.stream(a).sum();
 //		if (diff == 0) {
@@ -86,7 +86,8 @@ public class MinerOthers {
         
         
         
-        
+      //-------- 정렬 후 높은 값 부터 순서대로 다이아->철->돌 사용시 피로도 합 계산 --------//
+      //-------- 위에서 피로도 계산을 5^2,5^1,5^0 로 정리했기 때문에 다이아곡갱이->나누기 25, 철->나누기 5, 돌->나누기 1 (최소값 1로 제한) 해서 피로도 계산이 가능 --------//
 //		.mapToInt(arr -> {
 //		int n = picks[0]-- > 0 ? 25 : picks[1]-- > 0 ? 5 : 1;
 //		return Arrays.stream(arr).map(i -> Math.max(i / n, 1)).sum();
