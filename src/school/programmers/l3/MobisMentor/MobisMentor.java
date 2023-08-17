@@ -1,4 +1,4 @@
-package school.programmers.l3;
+package school.programmers.l3.MobisMentor;
 
 public class MobisMentor {
 

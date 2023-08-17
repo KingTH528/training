@@ -1,4 +1,4 @@
-package school.programmers.l2;
+package school.programmers.l2.miner;
 
 public class MinerStarter {
 
