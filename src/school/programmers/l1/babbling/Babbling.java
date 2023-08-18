@@ -11,6 +11,8 @@ public class Babbling {
 		System.out.println("답은 " + solution(babbling));
 		
 	}
+	
+	
     public static int solution(String[] babbling) {
         int answer = 0;	
         
