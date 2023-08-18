@@ -1,8 +1,8 @@
-package nowTest;
+package school.programmers.l1.babbling;
 
-import java.util.*;
+import java.util.Arrays;
 
-public class NowTr {
+public class Babbling {
 
 	public static void main(String[] args) {
 		String[] babbling = {"aya", "ye", "woo", "ma"};
