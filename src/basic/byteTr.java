@@ -65,10 +65,7 @@ public class byteTr {
 		}
 
 		
-		
-		
-		
-		
+
 		
 		System.out.println("\n\n==== 인코딩 테스트 ====");
 		String dddd = "a일b이c삼d사e오f육g칠";
@@ -129,10 +126,10 @@ public class byteTr {
 //      int rightShiftUnsigned = (negativeValue & 0xFF) >>> 1;
 //      System.out.println("-5(11111011) >>> 1 = " + rightShiftUnsigned + "(" + Integer.toBinaryString(rightShiftUnsigned) + ")");
 		
+		
+		
 	}
 
-	
-	
 	
 	
     public static String convertBinaryArrayToString(int[] binaryValues) {
