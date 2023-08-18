@@ -1,7 +1,7 @@
 package basic;
 
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.Arrays;
 
 public class byteTr {
 	
@@ -90,47 +90,47 @@ public class byteTr {
 		
 		} catch (UnsupportedEncodingException e) {}
 		
-//		
-//		
-//		
-//		
-//		
-//		//========================//
-//		//==== int to byte ====//
-//		//========================//
-//		int intA = 2147483647;
-//		int midA = intA*2/2;
-//		int midB = intA*2 >>> 1;
-//		
-//		System.out.println("\n");
-//		System.out.println("!!!int test!!!");
-//		System.out.println("0"+Integer.toBinaryString(intA) + " --> " + intA);
-//		System.out.println(binary32(intA) + " --> " + intA);
-//		System.out.println(binary32(midA*2) + " --> " + intA*2);
-//		System.out.println(binary32(midA) + " --> " + midA);
-//		System.out.println(binary32(midB) + " --> " + midB);
-//		
-		
-//      byte value = 5;
-//
-//      // 왼쪽 시프트
-//      byte leftShift = (byte) (value << 1);
-//      System.out.println("5(0101) << 1 = " + leftShift + "(" + Integer.toBinaryString(leftShift & 0xFF) + ")");
-//
-//      // 부호 있는 오른쪽 시프트
-//      byte negativeValue = -5;
-//      byte rightShiftSigned = (byte) (negativeValue >> 1);
-//      System.out.println("-5(11111011) >> 1 = " + rightShiftSigned + "(" + Integer.toBinaryString(rightShiftSigned & 0xFF) + ")");
-//
-//      // 부호 없는 오른쪽 시프트
-//      int rightShiftUnsigned = (negativeValue & 0xFF) >>> 1;
-//      System.out.println("-5(11111011) >>> 1 = " + rightShiftUnsigned + "(" + Integer.toBinaryString(rightShiftUnsigned) + ")");
 		
 		
 		
-	}
+		
+		
+		
+		
+		//========================//
+		//==== int to byte ====//
+		//========================//
+		int intA = 2147483647;
+		int midA = intA*2/2;
+		int midB = intA*2 >>> 1;
+		
+		System.out.println("\n");
+		System.out.println("!!!int test!!!");
+		System.out.println("0"+Integer.toBinaryString(intA) + " --> " + intA);
+		System.out.println(binary32(intA) + " --> " + intA);
+		System.out.println(binary32(midA*2) + " --> " + intA*2);
+		System.out.println(binary32(midA) + " --> " + midA);
+		System.out.println(binary32(midB) + " --> " + midB);
+		
+		
+      byte value = 5;
 
-	
+      // 왼쪽 시프트
+      byte leftShift = (byte) (value << 1);
+      System.out.println("5(0101) << 1 = " + leftShift + "(" + Integer.toBinaryString(leftShift & 0xFF) + ")");
+
+      // 부호 있는 오른쪽 시프트
+      byte negativeValue = -5;
+      byte rightShiftSigned = (byte) (negativeValue >> 1);
+      System.out.println("-5(11111011) >> 1 = " + rightShiftSigned + "(" + Integer.toBinaryString(rightShiftSigned & 0xFF) + ")");
+
+      // 부호 없는 오른쪽 시프트
+      int rightShiftUnsigned = (negativeValue & 0xFF) >>> 1;
+      System.out.println("-5(11111011) >>> 1 = " + rightShiftUnsigned + "(" + Integer.toBinaryString(rightShiftUnsigned) + ")");
+		
+		
+
+	}
 	
     public static String convertBinaryArrayToString(int[] binaryValues) {
         StringBuilder sb = new StringBuilder();
