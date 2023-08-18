@@ -1,4 +1,4 @@
-package algorithm_ex;
+package basic;
 
 public class enumTest {
 	enum enumSample {
