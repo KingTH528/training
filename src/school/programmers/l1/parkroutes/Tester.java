@@ -16,61 +16,108 @@ public class Tester {
 		String[] routes = {"E 2", "S 3", "W 1"};
 		
 		
-		new Solution().solution(park, routes);
-////		System.out.println("\n\n답\n" + 
-//			for(int i : new Solution().solution(park, routes))System.out.println(i);
-//			
-//		
-////		);
+//		solution(park, routes);
+//		System.out.println("\n\n답\n" + 
+			for(int i : solution(park, routes))System.out.println(i);
+			
+		
+//		);
 		
 	}
+	
+	public static int[] solution(String[] park, String[] routes) {
+	    int[] hw = startHW(park);
+	    int[] max = {park.length-1, park[0].length()-1};
+	    
+	    for(String routeStr : routes) {
+		    int dw = 0, dh = 0;
+		    char ro = routeStr.charAt(0);
+		    if(ro=='E') dw = 1;
+		    else if(ro=='W') dw = -1;
+		    else if(ro=='S') dh = 1;
+		    else if(ro=='N') dh = -1;
+		    
+		    int distance = Character.getNumericValue(routeStr.charAt(2));
+
+		    int[] tempHW = hw.clone();
+		    for(int i = 0 ; i < distance ; i++) {
+		    	int[] newHW = hw.clone();
+		    	newHW[0] += +dh;
+		    	newHW[1] += +dw;
+		    	if(   0<=newHW[0] && newHW[0]<=max[0]
+		    	   && 0<=newHW[1] && newHW[1]<=max[1]
+		    	   && park[newHW[0]].charAt(newHW[1])!='X'){
+		    		hw = newHW.clone();
+		    	}else {
+		    		hw = tempHW.clone();
+		    		break;
+		    	}
+		    }
+	    }
+		return hw;
+	}
+	
+	public static int[] startHW(String[] park) {
+		for(int i = 0 ; i < park.length ; i++) {
+			for(int j = 0 ; j < park[i].length() ; j++) {
+				if(park[i].charAt(j)=='S') {
+					return new int[] {i,j};
+				}
+			}
+		}
+		return null;
+	}
+
+	
 }
 
 
 
-class Solution {
-    public int[] solution(String[] park, String[] routes) {
-        int[] xy = findS(park);
-        int maxX = park.length - 1;
-        int maxY = park[0].length() - 1;
-        for (String route : routes) {
-            char direction = route.charAt(0);
-            int distance = Character.getNumericValue(route.charAt(2));
-            int dx = 0, dy = 0;
-
-            if(direction=='E')dy = 1;
-            else if(direction=='W')dy = -1;
-            else if(direction=='N')dx = -1;
-            else if(direction=='S')dx = 1;
-
-            int[] tempXY = {xy[0], xy[1]};
-            for (int i = 0; i < distance; i++) {
-            	int[] newXY = {xy[0] + dx, xy[1] + dy};
-            	if (    0 <= newXY[0] && newXY[0] <= maxX 
-            		     && 0 <= newXY[1] && newXY[1] <= maxY 
-            		     && park[newXY[0]].charAt(newXY[1]) != 'X') {
-            		xy = newXY.clone();
-                } else {
-                	xy = tempXY.clone();
-                    break;
-                }
-            }
-        }
-        return xy;
-    }
-
-    // 시작지점 찾기
-    private int[] findS(String[] park) {
-        for (int i = 0; i < park.length; i++) {
-            for (int j = 0; j < park[i].length(); j++) {
-                if (park[i].charAt(j) == 'S') {
-                    return new int[] {i, j};
-                }
-            }
-        }
-        return null;
-    }
-}
+//class Solution {
+//    public int[] solution(String[] park, String[] routes) {
+//        int[] xy = findS(park);
+//        int maxX = park.length - 1;
+//        int maxY = park[0].length() - 1;
+//        for (String route : routes) {
+//            //방향
+//            char direction = Character.getNumericValue(routeStr.charAt(2));
+//            int dx = 0, dy = 0;
+//            if(direction=='E')dy = 1;
+//            else if(direction=='W')dy = -1;
+//            else if(direction=='N')dx = -1;
+//            else if(direction=='S')dx = 1;
+//            
+//            //거리
+//            int distance = Character.getNumericValue(route.charAt(2));
+//
+//            int[] tempXY = xy;
+//            for (int i = 0; i < distance; i++) {
+//            	int[] newXY = {xy[0] + dx, xy[1] + dy};
+//            	if (    0 <= newXY[0] && newXY[0] <= maxX 
+//            		 && 0 <= newXY[1] && newXY[1] <= maxY 
+//            		 && park[newXY[0]].charAt(newXY[1]) != 'X') {
+//            		xy = newXY;
+//                } else {
+//                	xy = tempXY;
+//                    break;
+//                }
+//            }
+//        }
+//        return xy;
+//    }
+//    
+//    // 시작지점 찾기
+//    private int[] findS(String[] park) {
+//        for (int i = 0; i < park.length; i++) {
+//            for (int j = 0; j < park[i].length(); j++) {
+//                if (park[i].charAt(j) == 'S') {
+//                    return new int[] {i, j};
+//                }
+//            }
+//        }
+//        return null;
+//    }
+//}
 
 
 
