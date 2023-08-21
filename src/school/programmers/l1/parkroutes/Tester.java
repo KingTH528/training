@@ -6,94 +6,72 @@ public class Tester {
 		
 		
 		
-		String[] park = {"OSO","OOO","OXO","OOO"};
-		String[] routes = {"E 2","S 3","W 1"};
+//		String[] park = {"OOS", "OOO", "OOO"};
+//		String[] routes = {"S 2", "E 2", "W 1"};
+//		
+//		String[] park = {"SOO", "OOO", "OOO"};
+//		String[] routes = {"E 2", "S 2", "W 1"};
 		
-		System.out.println("\n\n답\n" + 
-		new Solution().solution(
-				park, routes
-				
-		));
+		String[] park = {"OSO", "OOO", "OXO", "OOO"};
+		String[] routes = {"E 2", "S 3", "W 1"};
+		
+		
+		new Solution().solution(park, routes);
+////		System.out.println("\n\n답\n" + 
+//			for(int i : new Solution().solution(park, routes))System.out.println(i);
+//			
+//		
+////		);
 		
 	}
 }
 
-class Solution {
-	
-    public int[] solution(String[] park, String[] routes) {
-        int x=-1, y=-1;
-        int maxX=park[0].length()-1, maxY=park.length-1;
-        
-        //시작지점 확인
-        boolean S = false;
-        for(int i = 0 ; i<park.length ; i++) {
-        	if(S) break;
-        	if(park[i].contains("S")) {
-        		char[] chA = park[i].toCharArray();
-        		for(int j = 0 ; j < chA.length ; j++) {
-        			if(chA[j]=='S') {
-        				x=j;
-        				y=i;
-        				S = true;
-        				break;
-        			}
-        		}
-        	}
-        }
-        System.out.println("시작점 : " + x + ", " + y);
 
-        //명령별 방향 크기 확인
-        for(String str : routes) {
-        	char route = 'y';
-        	int dis = Character.getNumericValue(str.charAt(2));
-        	int pM = 1;
-        	int tempX = x;
-        	int tempY = y;
-        	if(str.charAt(0)=='W' || str.charAt(0)=='N') pM = -1;
-        	if(str.charAt(0)=='E' || str.charAt(0)=='W') {
-        		tempX += pM;
-        		route='x';
-        	}else {
-        		tempY+= pM;
-        	}
-        	System.out.println("명령 : " + route + "방향으로 " + dis*pM);
-        	
-        	
-        	boolean f = true;
-        	// i는 그냥 명령한 이동 수
-    		for(int i = 0 ; i < dis ; i ++) {
-    			if(0 <= tempX && tempX < maxX     && 0 <= tempY && tempY < maxY        && park[tempY].charAt(tempX)!='X') {
-    				if(route=='x') {
-    					System.out.println("sss" + i);
-    					tempX += pM;
-    				}
-    				else tempY += pM;
-    			}
-    			else {
-    				System.out.println("ddd" + i);
-    				tempX = x;
-    				tempY = y;
-    				f = false;
-    				break;
-    			}
-    		}
-    		if(f) {
-    			System.out.println("성공");
-    			if(route=='x') x = tempX - pM;
-    			else y = tempY - pM;
-    		}else {
-    			
-    			System.out.println("실패");
-    		}
-    		System.out.println("x:" + x + " y:" + y);
+
+class Solution {
+    public int[] solution(String[] park, String[] routes) {
+        int[] xy = findS(park);
+        int maxX = park.length - 1;
+        int maxY = park[0].length() - 1;
+        for (String route : routes) {
+            char direction = route.charAt(0);
+            int distance = Character.getNumericValue(route.charAt(2));
+            int dx = 0, dy = 0;
+
+            if(direction=='E')dy = 1;
+            else if(direction=='W')dy = -1;
+            else if(direction=='N')dx = -1;
+            else if(direction=='S')dx = 1;
+
+            int[] tempXY = {xy[0], xy[1]};
+            for (int i = 0; i < distance; i++) {
+            	int[] newXY = {xy[0] + dx, xy[1] + dy};
+            	if (    0 <= newXY[0] && newXY[0] <= maxX 
+            		     && 0 <= newXY[1] && newXY[1] <= maxY 
+            		     && park[newXY[0]].charAt(newXY[1]) != 'X') {
+            		xy = newXY.clone();
+                } else {
+                	xy = tempXY.clone();
+                    break;
+                }
+            }
         }
-        System.out.println("\n결과\nx:" + x + " y:" + y);
-        int[] answer = {y,x};
-        return answer;
+        return xy;
     }
-	
-	
+
+    // 시작지점 찾기
+    private int[] findS(String[] park) {
+        for (int i = 0; i < park.length; i++) {
+            for (int j = 0; j < park[i].length(); j++) {
+                if (park[i].charAt(j) == 'S') {
+                    return new int[] {i, j};
+                }
+            }
+        }
+        return null;
+    }
 }
+
 
 
 
