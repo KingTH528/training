@@ -43,23 +43,20 @@ class Solution {
         	Map<String, Object> info = new HashMap<String, Object>();
         	String[] infoStr = str.split(" ");
         	info.put("regDate", dateConvert(infoStr[0]));
-        	info.put("pol", infoStr[1]);
+        	info.put("policy", infoStr[1]);
         	regList.add(info);
         }
         
-        
-        List<Integer> tempAnswer = new ArrayList<Integer>();
         //privacies마다 terms로 만료일 확인 후 오늘 날짜랑 비교
+        List<Integer> tempAnswer = new ArrayList<Integer>();
         for(int i = 0 ; i < regList.size() ; i++) {
-        	Integer[] tempDate = prev( (Integer[])(regList.get(i).get("regDate")),   policy.get(regList.get(i).get("pol"))     );
+        	Integer[] tempDate = prev( (Integer[])(regList.get(i).get("regDate")), policy.get(regList.get(i).get("policy")));
         	if(compare(todayArr, tempDate)) {
         		tempAnswer.add(i);
         	}
         }
         
-        
-        
-        
+        //배열로 정리
         int[] answer = new int[tempAnswer.size()];
         for(int i = 0 ; i< answer.length ; i++) {
         	answer[i] = tempAnswer.get(i)+1;
@@ -116,7 +113,9 @@ class Solution {
     	//완전 같은때
     	return false;
 	}
-    
-    
-    
 }
+
+
+
+
+
