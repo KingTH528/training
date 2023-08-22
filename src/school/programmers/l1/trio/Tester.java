@@ -35,7 +35,7 @@ class Solution {
 					
 					cnt++;
 				}else {
-					 
+					
 				}
 			}else {
 				System.out.println(n + ", " + i + " --> " + number[i]);
