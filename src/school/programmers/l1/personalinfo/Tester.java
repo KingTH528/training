@@ -21,7 +21,7 @@ public class Tester {
 		int[] sdvf = new Solution().solution(today, terms, privacies);
 
 		for(int i : sdvf) {
-			System.out.println(i);
+			System.out.print(i + " ");
 		}
 	}
 }
@@ -77,19 +77,23 @@ class Solution {
     	return intArr;
 	}
     
-    
-    //int값 이전 날짜 계산 이 아니라 이 후 날짜
     public Integer[] prev(Integer[] date, int term) {
     	date[1] += term;
-    	date[2] -= 1;
-    	if(date[2] <= 0) {
-    		date[2] += 28;
+    	date[2] -= 1;    	
+		
+    	if(date[2] == 0) {
+    		date[2] = 28;
     		date[1] -= 1;
     	}
     	
 		if(date[1] > 12) {
-			date[1] -= 12;
-			date[0] += 1;
+			date[0] += date[1]/12;
+			date[1] = date[1]%12;
+		}
+
+		if(date[1]==0) {
+			date[0]--;
+			date[1]=12;
 		}
 
     	return date;
