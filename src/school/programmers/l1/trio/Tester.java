@@ -3,8 +3,8 @@ package school.programmers.l1.trio;
 public class Tester {
 	public static void main(String[] args) {
 //		int[] intArr = {0,0,0}; //1
-		int[] intArr = {-2, 3, 0, 2, -5}; //2
-//		int[] intArr = {-3, -2, -1, 0, 1, 2, 3};  //5
+//		int[] intArr = {-2, 3, 0, 2, -5}; //2
+		int[] intArr = {-3, -2, -1, 0, 1, 2, 3};  //5
 //		int[] intArr = {-1, 1, -1, 1};  //0
 		
 		System.out.println("==============================\n답 : " + new Solution().solution(intArr));
@@ -14,47 +14,25 @@ public class Tester {
 
 class Solution {
 	
-	int cnt = 0;
-	
 	public int solution(int[] number) {
-		fnc(number, 3, 0, 0, 0);
-		
-		return cnt;
+		return fnc(number, 3, 0, 0, 0);
 	}
 	
-	
-	// cnt를 리턴
 	public int fnc(int[] number, int n, int total, int sum, int start) {
-		
+		int cnt = 0;
 		for(int i = start ; i < number.length+1-n ; i++) {
 			int thisSum = sum+number[i];
-//			System.out.println("합 : " + thisSum);
 			if(n <= 1) {
-				System.out.println("마지막 포문" + n + ", " + i + " --> " + number[i]);
 				if(thisSum == total) {
-					
 					cnt++;
-				}else {
-					
 				}
 			}else {
-				System.out.println(n + ", " + i + " --> " + number[i]);
-				fnc(number, n-1, cnt, sum, i+1);
+				cnt += fnc(number, n-1, total, thisSum, i+1);
 			}
-		}
-		
-		
-		
-		
-		
-		
+		} 
 		return cnt;
 	}
-	
-	
 }
-
-
 
 
 //class Solution {
