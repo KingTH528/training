@@ -86,7 +86,7 @@ class Solution {
     		else if(direction > 3) direction = 0;
     	}else {
     		
-    	}
+    	} 
     	
     	//3. 해당 방향으로 이동
     	xy[0] += dX[direction];
