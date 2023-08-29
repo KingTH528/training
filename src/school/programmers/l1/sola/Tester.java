@@ -138,26 +138,78 @@ public class Tester {
 //    
 //}
 
-class Solution {
-    int[][] nodeInfo;
-    boolean[][][] check;
-    int[] dX = {0, 1, 0, -1};
-    int[] dY = {1, 0, -1, 0};
+//class Solution {
+//    int[][] nodeInfo;
+//    boolean[][][] check;
+//    int[] dX = {0, 1, 0, -1};
+//    int[] dY = {1, 0, -1, 0};
+//
+//    public int[] solution(String[] grid) {
+//        List<Integer> cycleList = new ArrayList<>();
+//
+//        int rows = grid.length;
+//        int cols = grid[0].length();
+//        nodeInfo = new int[rows][cols];
+//        check = new boolean[rows][cols][4];
+//
+//        for (int i = 0; i < rows; i++) {
+//            for (int j = 0; j < cols; j++) {
+//                char ch = grid[i].charAt(j);
+//                nodeInfo[i][j] = ch == 'S' ? 0 : ch == 'R' ? 1 : -1;
+//            }
+//        }
+//
+//        for (int x = 0; x < rows; x++) {
+//            for (int y = 0; y < cols; y++) {
+//                for (int dir = 0; dir < 4; dir++) {
+//                    if (!check[x][y][dir]) {
+//                        Stack<int[]> stack = new Stack<>();
+//                        int length = 0;
+//
+//                        stack.push(new int[]{x, y, dir});
+//                        while (!stack.isEmpty()) {
+//                            int[] top = stack.pop();
+//                            int curX = top[0], curY = top[1], curDir = top[2];
+//
+//                            if (check[curX][curY][curDir]) {
+//                                continue;
+//                            }
+//
+//                            check[curX][curY][curDir] = true;
+//                            length++;
+//
+//                            int newDir = (curDir + nodeInfo[curX][curY] + 4) % 4;
+//                            int newX = (curX + dX[newDir] + rows) % rows;
+//                            int newY = (curY + dY[newDir] + cols) % cols;
+//
+//                            stack.push(new int[]{newX, newY, newDir});
+//                        }
+//
+//                        if (length > 0) {
+//                            cycleList.add(length);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        int[] answer = new int[cycleList.size()];
+//        for (int i = 0; i < answer.length; i++) {
+//            answer[i] = cycleList.get(i);
+//        }
+//        Arrays.sort(answer);
+//
+//        return answer;
+//    }
+//}
 
+
+class Solution {
     public int[] solution(String[] grid) {
         List<Integer> cycleList = new ArrayList<>();
-
-        int rows = grid.length;
-        int cols = grid[0].length();
-        nodeInfo = new int[rows][cols];
-        check = new boolean[rows][cols][4];
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                char ch = grid[i].charAt(j);
-                nodeInfo[i][j] = ch == 'S' ? 0 : ch == 'R' ? 1 : -1;
-            }
-        }
+        int rows = grid.length, cols = grid[0].length();
+        boolean[][][] check = new boolean[rows][cols][4];
+        int[] dX = {0, 1, 0, -1}, dY = {1, 0, -1, 0};
 
         for (int x = 0; x < rows; x++) {
             for (int y = 0; y < cols; y++) {
@@ -171,35 +223,27 @@ class Solution {
                             int[] top = stack.pop();
                             int curX = top[0], curY = top[1], curDir = top[2];
 
-                            if (check[curX][curY][curDir]) {
-                                continue;
-                            }
+                            if (check[curX][curY][curDir]) continue;
 
                             check[curX][curY][curDir] = true;
                             length++;
 
-                            int newDir = (curDir + nodeInfo[curX][curY] + 4) % 4;
+                            char ch = grid[curX].charAt(curY);
+                            int newDir = (curDir + (ch == 'S' ? 0 : ch == 'R' ? 1 : -1) + 4) % 4;
                             int newX = (curX + dX[newDir] + rows) % rows;
                             int newY = (curY + dY[newDir] + cols) % cols;
 
                             stack.push(new int[]{newX, newY, newDir});
                         }
 
-                        if (length > 0) {
-                            cycleList.add(length);
-                        }
+                        if (length > 0) cycleList.add(length);
                     }
                 }
             }
         }
 
-        int[] answer = new int[cycleList.size()];
-        for (int i = 0; i < answer.length; i++) {
-            answer[i] = cycleList.get(i);
-        }
+        int[] answer = cycleList.stream().mapToInt(i -> i).toArray();
         Arrays.sort(answer);
-
         return answer;
     }
 }
-
