@@ -218,11 +218,13 @@ class Solution {
                         Stack<int[]> stack = new Stack<>();
                         int length = 0;
 
+                        //스텍에 처음꺼 부터 쌓고 이미 한거면 컨티뉴가 되면서 처음께 튀어나오고 
                         stack.push(new int[]{x, y, dir});
                         while (!stack.isEmpty()) {
                             int[] top = stack.pop();
                             int curX = top[0], curY = top[1], curDir = top[2];
 
+                            //어차피 이전사이클이랑 중복이면 처음부터 빠져버림
                             if (check[curX][curY][curDir]) continue;
 
                             check[curX][curY][curDir] = true;
@@ -241,7 +243,7 @@ class Solution {
                 }
             }
         }
-
+        
         int[] answer = cycleList.stream().mapToInt(i -> i).toArray();
         Arrays.sort(answer);
         return answer;
