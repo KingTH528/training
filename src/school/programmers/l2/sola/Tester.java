@@ -1,4 +1,4 @@
-package school.programmers.l1.sola;
+package school.programmers.l2.sola;
 
 import java.util.*;
 
