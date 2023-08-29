@@ -237,7 +237,6 @@ class Solution {
 
                             stack.push(new int[]{newX, newY, newDir});
                         }
-
                         if (length > 0) cycleList.add(length);
                     }
                 }
