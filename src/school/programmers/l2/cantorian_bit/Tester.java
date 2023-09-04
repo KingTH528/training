@@ -17,9 +17,9 @@ public class Tester {
 		// 11011, 11011, 00000, 11011, 11011 / 11011, 11011, 00000, 11011, 11011 / 00000, 00000, 0    0000, 00000, 00000 / 11011, 11011, 00000, 1    1011, 11011 / 11011, 11011, 00000, 11011, 11011
 		// 12345, 67890, 12345, 67890, 12345 / 67890, 12345, 67890, 12345, 67890 / 12345, 67890, 1    2345, 67890, 12345 / 67890, 12345, 67890, 1    2345, 67890 / 12345, 67890, 12345, 67890, 12345
 		// 0          1             2              3             4             5              6                 7              8             9                 0              1             2
-		long n = 2;
-		long l = 62;
-		long r = 91;
+		int n = 3;
+		long l = 51;
+		long r = 75;
 		
 		long answer = new Solution().solution(n, l ,r);
 		System.out.println("\n========== 답 ==========\n" + answer);
@@ -31,7 +31,7 @@ public class Tester {
 
 //// 이게 내껀데
 //class Solution {
-//    public long solution(long n, long l, long r) {
+//    public long solution(int n, long l, long r) {
 //        return (calculator(r)-calculator(l-1));
 //    }
 //    
@@ -74,24 +74,47 @@ public class Tester {
 //}
 
 
-//이게 내꺼랑 같은방식이면서 더 좋은 소스(남에꺼)
+//// 이게 내꺼랑 같은방식이면서 더 좋은 소스(남에꺼)
+//class Solution {
+//    int[] iArray = {1,1,0,1};
+//    private int bits(long index){
+//        int answer = 0,  base = 1;
+//        
+//        if(index < 5){
+//            for(int i = 0; i < index; i++) if(iArray[i]==1) answer++;
+//            return answer;
+//        }
+//        while(Math.pow(5,base+1)<index) base++;
+//        int noO = (int)Math.pow(4,base);
+//        int noI = (int)Math.pow(5,base);
+//        int section = (int)(index / noI);
+//        int remainder = (int)(index % noI);
+//        answer = section * noO;
+//        if(section >= 3) answer -= noO;
+//        if(section == 2) return answer;
+//        else return answer + bits(remainder);
+//    }
+//    public long solution(int n, long l, long r) {
+//        return bits(r)-bits(l-1);
+//    }
+//}
+
+
+// 엄청 느리긴 한데 문제를 엄청 단순하게 바꿈, n이 정확히 정의되야함(남에꺼)
 class Solution {
-    private int bits(long index){
-        String bar = "11011";
-        int answer = 0, base = 1;
-        if(index <= 5){
-            for(int a = 0; a < index; a++) if(bar.charAt(a)=='1') answer++;
-            return answer;
+    public int solution(int n, long l, long r) {
+        long answer = r-l+1;
+        for(long i=l-1;i<=r-1;i++){
+            for(int j=0;j<n;j++){
+                if((i/(int)Math.pow(5,j))%5==2){
+                    answer--;
+                    break;
+                }
+            }
         }
-        while(Math.pow(5,base+1)<index) base++;
-        int section = (int)(index / (long)Math.pow(5,base));
-        int remainder = (int)(index % (long)Math.pow(5,base));
-        answer = section * (int)Math.pow(4,base);
-        if(section >= 3) answer -= (int)Math.pow(4,base);
-        if(section == 2) return answer;
-        else return answer + bits(remainder);
-    }
-    public long solution(long n, long l, long r) {
-        return bits(r)-bits(l-1);
+
+        return (int) answer;
     }
 }
+
+
