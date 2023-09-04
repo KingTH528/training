@@ -35,9 +35,9 @@ public class Tester {
 //        return (calculator(r)-calculator(l-1));
 //    }
 //    
-//    public long calculator(long a) {
+//    public int calculator(long a) {
 //    	int[] bit = {1,1,0,1,1};
-//    	long answer = 0;
+//    	int answer = 0;
 //    	long nowIndex = 1;
 //        int preN = -1;
 //        int newN = -1;
@@ -65,15 +65,14 @@ public class Tester {
 //        	if(cntN!=3) answer +=  Math.pow(4, newN);
 //        	preN = newN;
 //        }
-//        
-//        if(cntN!=2) {
-//        	for(int i = 0 ; i <= a-nowIndex ; i++) {
-//        		answer += bit[i];
-//        	}
-//        }
+//    	for(int i = 0 ; i <= a-nowIndex ; i++) {
+//    		 if(cntN==2) break;
+//    		answer += bit[i];
+//    	}
 //    	return answer;
 //    }
 //}
+
 
 //이게 내꺼랑 같은방식이면서 더 좋은 소스(남에꺼)
 class Solution {
@@ -92,7 +91,7 @@ class Solution {
         if(section == 2) return answer;
         else return answer + bits(remainder);
     }
-    public int solution(int n, long l, long r) {
+    public long solution(long n, long l, long r) {
         return bits(r)-bits(l-1);
     }
 }
