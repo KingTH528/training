@@ -29,48 +29,70 @@ public class Tester {
 
 
 
-// 내께 제일빠름
+//// 이게 내껀데
+//class Solution {
+//    public long solution(long n, long l, long r) {
+//        return (calculator(r)-calculator(l-1));
+//    }
+//    
+//    public long calculator(long a) {
+//    	int[] bit = {1,1,0,1,1};
+//    	long answer = 0;
+//    	long nowIndex = 1;
+//        int preN = -1;
+//        int newN = -1;
+//        long cntN = 1;
+//        int eZero = -1;
+//    	
+//        while( nowIndex < a-3 ) {
+//        	for(int i = 1 ; Math.pow(5, i) <= a-nowIndex ; i++) newN = i;
+//        	
+//        	if(cntN == 2 && preN != newN) break;
+//
+//        	nowIndex += Math.pow(5, newN);
+//        	
+//        	if(preN == newN) cntN++;
+//        	else cntN=1;
+//
+//        	if(cntN == 2) {
+//        		eZero = (int) (nowIndex + Math.pow(5, preN))-1;
+//        		if(eZero >= a) {
+//        			answer +=  Math.pow(4, newN);
+//        			break;
+//        		}
+//        	}
+//        	
+//        	if(cntN!=3) answer +=  Math.pow(4, newN);
+//        	preN = newN;
+//        }
+//        
+//        if(cntN!=2) {
+//        	for(int i = 0 ; i <= a-nowIndex ; i++) {
+//        		answer += bit[i];
+//        	}
+//        }
+//    	return answer;
+//    }
+//}
+
+//이게 내꺼랑 같은방식이면서 더 좋은 소스(남에꺼)
 class Solution {
-    public long solution(long n, long l, long r) {
-        return (calculator(r)-calculator(l-1));
+    private int bits(long index){
+        String bar = "11011";
+        int answer = 0, base = 1;
+        if(index <= 5){
+            for(int a = 0; a < index; a++) if(bar.charAt(a)=='1') answer++;
+            return answer;
+        }
+        while(Math.pow(5,base+1)<index) base++;
+        int section = (int)(index / (long)Math.pow(5,base));
+        int remainder = (int)(index % (long)Math.pow(5,base));
+        answer = section * (int)Math.pow(4,base);
+        if(section >= 3) answer -= (int)Math.pow(4,base);
+        if(section == 2) return answer;
+        else return answer + bits(remainder);
     }
-    
-    public long calculator(long a) {
-    	int[] bit = {1,1,0,1,1};
-    	long answer = 0;
-    	long nowIndex = 1;
-        int preN = -1;
-        int newN = -1;
-        long cntN = 1;
-        int eZero = -1;
-    	
-        while( nowIndex < a-3 ) {
-        	for(int i = 1 ; Math.pow(5, i) <= a-nowIndex ; i++) newN = i;
-        	
-        	if(cntN == 2 && preN != newN) break;
-
-        	nowIndex += Math.pow(5, newN);
-        	
-        	if(preN == newN) cntN++;
-        	else cntN=1;
-
-        	if(cntN == 2) {
-        		eZero = (int) (nowIndex + Math.pow(5, preN))-1;
-        		if(eZero >= a) {
-        			answer +=  Math.pow(4, newN);
-        			break;
-        		}
-        	}
-        	
-        	if(cntN!=3) answer +=  Math.pow(4, newN);
-        	preN = newN;
-        }
-        
-        if(cntN!=2) {
-        	for(int i = 0 ; i <= a-nowIndex ; i++) {
-        		answer += bit[i];
-        	}
-        }
-    	return answer;
+    public int solution(int n, long l, long r) {
+        return bits(r)-bits(l-1);
     }
 }
