@@ -1,5 +1,8 @@
 package baekjoon.l1.byte_input;
 
+
+
+// 입력 개선
 public class Main1 {
 	static Reader in = new Reader();
 	
