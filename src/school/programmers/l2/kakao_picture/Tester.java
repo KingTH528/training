@@ -22,12 +22,11 @@ public class Tester {
 		// String[] data = ["M~C<2", "C~M>1"]
 		long n = 2;
 		String[] data  = {"N~F=0", "R~T>2"};
-		
-		long answer = new Solution().solution(n, data);
-		System.out.println("\n========== 답 ==========\n" + answer);
+//		long answer = new Solution().solution(n, data);
+//		System.out.println("\n========== 답 ==========\n" + answer);
 		
 	}
-}
+//}
 
 //class Solution {
 //    public int solution(long n, String[] data) {
