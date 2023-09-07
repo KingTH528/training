@@ -1,4 +1,4 @@
-package baekjoon.l1.byte_input;
+package baekjoon.fast_io;
 
 import java.io.*;
 
